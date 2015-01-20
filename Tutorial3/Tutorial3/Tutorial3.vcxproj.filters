@@ -29,10 +29,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\helper.h">
+    <ClInclude Include="BinTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BinTree.h">
+    <ClInclude Include="..\..\helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
