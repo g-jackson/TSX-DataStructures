@@ -82,11 +82,13 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\BinTree.cpp" />
     <ClCompile Include="..\..\helper.cpp" />
-    <ClCompile Include="..\..\sharing.cpp" />
+    <ClCompile Include="..\..\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\helper.h" />
+    <ClInclude Include="BinTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
