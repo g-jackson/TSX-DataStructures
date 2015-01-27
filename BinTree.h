@@ -1,3 +1,4 @@
+#pragma once
 typedef signed __int64      INT64, *PINT64;
 #include <cstddef>
 

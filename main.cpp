@@ -1,14 +1,18 @@
-#include <iostream>                             // cout
-#include <iomanip>                              // setprecision
-#include "helper.h"                             //
+//#include <iostream>                             // cout
+//#include <iomanip>                              // setprecision
+#ifndef HELPER_H
+#define HELPER_H
+#include "helper.h" 
+#endif
+#ifndef CONFIG_H
+#define CONFIG_H
+#include "config.h" 
+#endif
 #include "BinTree.h"
+#include "output.h"
 
 using namespace std;                            // cout
 
-#define K           1024                        //
-#define GB          (K*K*K)                     //
-#define NOPS        100							//
-#define NSECONDS    2                           // run each test for NSECONDS
 #define COUNTER64                               // comment for 32 bit counter
 
 #ifdef COUNTER64
@@ -184,61 +188,32 @@ int main()
     //
     // get date
     //
-    char dateAndTime[256];
-    getDateAndTime(dateAndTime, sizeof(dateAndTime));
+	char dateAndTime[256];
+	getDateAndTime(dateAndTime, sizeof(dateAndTime));
 
-    //
-    // console output
-    //
-    cout << getHostName() << " " << getOSName() << " sharing " << (is64bitExe() ? "(64" : "(32") << "bit EXE)" ;
-#ifdef _DEBUG
-    cout << " DEBUG";
-#else
-    cout << " RELEASE";
-#endif
-    cout << " NCPUS=" << ncpu << " RAM=" << (getPhysicalMemSz() + GB - 1) / GB << "GB " << dateAndTime << endl;
-#ifdef COUNTER64
-    cout << "COUNTER64";
-#else
-    cout << "COUNTER32";
-#endif
-#ifdef FALSESHARING
-    cout << " FALSESHARING";
-#endif
-	cout << " NOPS=" << NOPS << " NSECONDS=" << NSECONDS;
-#ifdef USEPMS
-    cout << " USEPMS";
-#endif
-    cout << endl;
-    cout << "Intel" << (cpu64bit() ? "64" : "32") << " family " << cpuFamily() << " model " << cpuModel() << " stepping " << cpuStepping() << " " << cpuBrandString() << endl;
-#ifdef USEPMS
-    cout << "performance monitoring version " << pmversion() << ", " << nfixedCtr() << " x " << fixedCtrW() << "bit fixed counters, " << npmc() << " x " << pmcW() << "bit performance counters" << endl;
-#endif
+	//
+	// console output
+	//
+
+
 
     //
     // get cache info
     //
     lineSz = getCacheLineSz();
     //lineSz *= 2;
-
-    if ((&cnt3 >= &cnt0) && (&cnt3 < (&cnt0 + lineSz/sizeof(UINT64))))
-        cout << "Warning: cnt3 shares cache line used by cnt0" << endl;
-    if ((&cnt3 >= &cnt1) && (&cnt3 < (&cnt1 + lineSz / sizeof(UINT64))))
-        cout << "Warning: cnt3 shares cache line used by cnt1" << endl;
-    if ((&cnt3 >= &cnt2) && (&cnt3 < (&cnt2 + lineSz / sizeof(UINT64))))
-        cout << "Warning: cnt2 shares cache line used by cnt1" << endl;
-
-
+	output(ncpu,  maxThread,  dateAndTime,  lineSz);
     //
     // check if RTM supported
     //
-    if (!rtmSupported()) {
+	/*
+	if (!rtmSupported()) {
         cout << "RTM (restricted transactional memory) NOT supported by this CPU" << endl;
         quit();
         return 1;
     }
+	*/
 
-    cout << endl;
 
     //
     // allocate global variable

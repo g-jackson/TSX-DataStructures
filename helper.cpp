@@ -352,14 +352,14 @@ int getDeterministicCacheInfo()
         type = cd.eax & 0x1f;
         if (type == 0)
             break;
-        cout << "L" << ((cd.eax >> 5) & 0x07);
-        cout << ((type == 1) ? " D" : (type == 2) ? " I" : " U");
+        //cout << "L" << ((cd.eax >> 5) & 0x07);
+        //cout << ((type == 1) ? " D" : (type == 2) ? " I" : " U");
         ways = ((cd.ebx >> 22) & 0x03ff) + 1;
         partitions = ((cd.ebx) >> 12 & 0x03ff) + 1;
         sets = cd.ecx + 1;
         lineSz = (cd.ebx & 0x0fff) + 1;
-        cout << " " << setw(5) << ways*partitions*lineSz*sets/1024 << "K" << " L" << setw(3) << lineSz << " K" << setw(3) << ways << " N" << setw(5) << sets;
-        cout << endl;
+        //cout << " " << setw(5) << ways*partitions*lineSz*sets/1024 << "K" << " L" << setw(3) << lineSz << " K" << setw(3) << ways << " N" << setw(5) << sets;
+        //cout << endl;
         i++;
     }
     return lineSz;
