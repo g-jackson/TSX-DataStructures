@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tutorial3", "Tutorial3\Tutorial3.vcxproj", "{2135EB19-59A6-4C60-A48E-29CF29B6FD03}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TSX-DS", "TSX-DS\TSX-DS.vcxproj", "{3903E097-55E2-41E4-B8A3-E9A96642132F}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2135EB19-59A6-4C60-A48E-29CF29B6FD03}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2135EB19-59A6-4C60-A48E-29CF29B6FD03}.Debug|Win32.Build.0 = Debug|Win32
-		{2135EB19-59A6-4C60-A48E-29CF29B6FD03}.Release|Win32.ActiveCfg = Release|Win32
-		{2135EB19-59A6-4C60-A48E-29CF29B6FD03}.Release|Win32.Build.0 = Release|Win32
 		{3903E097-55E2-41E4-B8A3-E9A96642132F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{3903E097-55E2-41E4-B8A3-E9A96642132F}.Debug|Win32.Build.0 = Debug|Win32
 		{3903E097-55E2-41E4-B8A3-E9A96642132F}.Release|Win32.ActiveCfg = Release|Win32

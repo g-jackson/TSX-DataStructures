@@ -1,5 +1,3 @@
-//#include <iostream>                             // cout
-//#include <iomanip>                              // setprecision
 #ifndef HELPER_H
 #define HELPER_H
 #include "helper.h" 
@@ -32,26 +30,10 @@ int maxThread;                                  // max # of threads
 THREADH *threadH;                               // thread handles
 UINT64 *ops;                                    // for ops per thread
 UINT64 *aborts;                                 // for counting aborts
-
-typedef struct {
-    int sharing;                                // sharing
-    int nt;                                     // # threads
-    UINT64 rt;                                  // run time (ms)
-    UINT64 ops;                                 // ops
-    UINT64 incs;                                // should be equal ops
-    UINT64 aborts;                              //
-} Result;
-
 Result *r;                                      // results
 UINT indx;                                      // results index
 
 volatile VINT *g;                               // NB: position of volatile
-
-// test memory allocation
-ALIGN(64) UINT64 cnt0;
-ALIGN(64) UINT64 cnt1;
-ALIGN(64) UINT64 cnt2;
-UINT64 cnt3;                                    // NB: in Debug mode allocated in cache line occupied by cnt0
 
 //shared thread variables
 binTree tree;
@@ -190,20 +172,14 @@ int main()
     //
 	char dateAndTime[256];
 	getDateAndTime(dateAndTime, sizeof(dateAndTime));
-
-	//
-	// console output
-	//
-
-
-
     //
     // get cache info
     //
     lineSz = getCacheLineSz();
     //lineSz *= 2;
-	output(ncpu,  maxThread,  dateAndTime,  lineSz);
-    //
+	outputConfig(ncpu,  maxThread,  dateAndTime,  lineSz);
+
+	//
     // check if RTM supported
     //
 	/*
@@ -232,31 +208,6 @@ int main()
     indx = 0;
 
     //
-    // use thousands comma separator
-    //
-    setCommaLocale();
-
-    //
-    // header
-    //
-    cout << setw(4) << "nt";
-    cout << setw(6) << "rt";
-    cout << setw(16) << "ops";
-    cout << setw(6) << "rel";
-    cout << setw(8) << "commit";
-	cout << setw(10) << "range";
-	cout << setw(10) << "valid";
-    cout << endl;
-    cout << setw(4) << "--";        // nt
-    cout << setw(6) << "--";        // rt
-    cout << setw(16) << "---";      // ops
-    cout << setw(6) << "---";       // rel
-    cout << setw(8) << "------";
-	cout << setw(10) << "--------";
-	cout << setw(10) << "--------";
-    cout << endl;
-
-    //
     // boost process priority
     // boost current thread priority to make sure all threads created before they start to run
     //
@@ -264,11 +215,12 @@ int main()
     SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
     SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
 #endif
+
     //
     // run tests
     //
+	outputHeader();
     UINT64 ops1 = 1;
-
 	for (int i = 1; i < 6; i++){
 		range = (int)(pow(2,(4*i)));
 		for (int nt = 1; nt <= maxThread; nt *= 2, indx++) {
@@ -310,21 +262,8 @@ int main()
                 ops1 = r[indx].ops;
             r[indx].nt = nt;
             r[indx].rt = rt;
+			outputResult(r, indx, range);
 
-            cout << setw(4) << nt;
-            cout << setw(6) << fixed << setprecision(2) << (double) rt / 1000;
-            cout << setw(16) << r[indx].ops;
-            cout << setw(6) << fixed << setprecision(2) << (double) r[indx].ops / ops1;
-            cout << setw(7) << fixed << setprecision(0) << 100.0 * (r[indx].ops - r[indx].aborts) / r[indx].ops << "%    ";
-			cout << setw(5) << range;
-			if (tree.isValidTree()){
-				cout  << "   valid tree";
-			}
-			else{
-				cout <<  " invalid tree";
-			}
-            cout << endl;
-			
             //
             // delete thread handles
             //
@@ -333,21 +272,10 @@ int main()
 		}
 	}
 		
-    cout << endl;
 
-    //
-    // output results so they can easily be pasted into a spread sheet from console window
-    //
-    setLocale();
-    cout << "sharing/nt/rt/ops/incs";
-    cout << "/aborts";
-    cout << endl;
-    for (UINT i = 0; i < indx; i++) {
-        cout << "/"  << r[i].nt << "/" << r[i].rt << "/"  << r[i].ops << "/" << r[i].incs;
-        cout << "/" << r[i].aborts;
-        cout << endl;
-    }
-    cout << endl;
+	// output results so they can easily be pasted into a spread sheet from console window
+
+	endResultOutput(r, indx);
 
     quit();
 
