@@ -2,30 +2,7 @@
 
 using namespace std;
 
-INT64 binTree::minVal(Node* in){
-	if (in == NULL){
-		return -1;
-	}
-	else if (in->left != NULL){
-		return minVal(in->left);
-	}
-	else{
-		return in->key;
-	}
-}
-
-INT64 binTree::maxVal(Node* in){
-	if (in == NULL){
-		return -1;
-	}
-	else if (in->right != NULL){
-		return minVal(in->right);
-	}
-	else{
-		return in->key;
-	}
-}
-
+//check binary tree is valid
 INT64 binTree::isValidTree(){
 	return isValid(root);
 }
@@ -50,6 +27,31 @@ INT64 binTree::isValid(Node* in){
 	return(true);
 }
 
+INT64 binTree::minVal(Node* in){
+	if (in == NULL){
+		return -1;
+	}
+	else if (in->left != NULL){
+		return minVal(in->left);
+	}
+	else{
+		return in->key;
+	}
+}
+
+INT64 binTree::maxVal(Node* in){
+	if (in == NULL){
+		return -1;
+	}
+	else if (in->right != NULL){
+		return minVal(in->right);
+	}
+	else{
+		return in->key;
+	}
+}
+
+//check if tree contains a key value n
 INT64 binTree::contains(INT64 n){
 	Node* volatile *pp = &root;
 	Node* volatile p = root;
@@ -74,6 +76,7 @@ INT64 binTree::contains(INT64 n){
 	return 1;
 }
 
+//add key value n if not already present, if present return 1
 INT64 binTree::add(Node *n){
 	Node* volatile *pp = &root;
 	Node* volatile p = root;
@@ -130,4 +133,8 @@ Node* binTree::remove(INT64 n){
 		*ppr = r->right;
 	}
 	return p; // return removed node
+}
+
+void halfBinTree(){
+
 }

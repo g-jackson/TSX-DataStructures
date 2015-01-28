@@ -50,28 +50,34 @@ UINT64 nrand(UINT64 &r)
 // TTS lock
 void TTS(){
 	UINT64 randin = rand();
+	int result;
 	for (int i = 0; i < NOPS; i++) {
 		randin = nrand(randin);
 		UINT64 in = randin % (range*2);	//reduce call to rand by using odd to add rand/2 and even to remove rand/2
-		do {										
-			while (tree.lock == 1)_mm_pause();			
-		} while (InterlockedExchange(&tree.lock, 1));
+
 		if (in %2 ==0){
 			in = in/2;
+			do {
+				while (tree.lock == 1)_mm_pause();
+			} while (InterlockedExchange(&tree.lock, 1));
 			Node* removed = tree.remove(in);
+			tree.lock = 0;
 			delete removed;
 		}
 		else{
 			Node* newNode= new Node();
 			in = in/2;
 			newNode->key = in;
-			if(tree.add(newNode)){
-			}
-			else{
+			do {
+				while (tree.lock == 1)_mm_pause();
+			} while (InterlockedExchange(&tree.lock, 1));
+			result = tree.add(newNode);
+			tree.lock = 0;
+			if(!result){
 				delete newNode;
 			}
 		}
-		tree.lock = 0;
+		
 	}
 }
 
@@ -143,7 +149,7 @@ WORKER worker(void *vthread){
 int main()
 {
     ncpu = getNumberOfCPUs();   // number of logical CPUs
-	maxThread = 1;//2 * ncpu;       // max number of threads
+	maxThread = 2 * ncpu;       // max number of threads
 
     // get cache info
     lineSz = getCacheLineSz();

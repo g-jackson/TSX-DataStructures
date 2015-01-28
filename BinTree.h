@@ -23,6 +23,7 @@ public:
 	INT64 maxVal(Node*);
 	INT64 minVal(Node*);
 	INT64 isValid(Node*);
+	void halfBinTree();
 	binTree(){
 		root = NULL;
 		lock = 0;
