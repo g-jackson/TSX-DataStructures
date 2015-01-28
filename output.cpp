@@ -43,7 +43,7 @@ void outputConfig(int ncpu, int maxThread, int lineSz){
 	cout << endl;
 }
 
-	void outputHeader(){
+void outputHeader(){
 	//
 	// use thousands comma separator
 	//
@@ -82,7 +82,7 @@ void endResultOutput(Result* r, int indx){
 	setLocale();
 	cout << "sharing/nt/rt/ops/incs/aborts";
 	cout << endl;
-	for (UINT i = 0; i < indx; i++) {
+	for (int i = 0; i < indx; i++) {
 		cout << "/" << r[i].nt << "/" << r[i].rt << "/" << r[i].ops << "/" << r[i].incs;
 		cout << "/" << r[i].aborts;
 		cout << endl;

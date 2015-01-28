@@ -12,18 +12,11 @@
 using namespace std;                            // cout
 
 #define COUNTER64                               // comment for 32 bit counter
-
-#ifdef COUNTER64
 #define VINT    UINT64                          //  64 bit counter
-#else
-#define VINT    UINT                            //  32 bit counter
-#endif
-
 #define ALIGNED_MALLOC(sz, align) _aligned_malloc(sz, align) // cache line size
 #define GINDX(n)    (g+n*lineSz/sizeof(VINT))   //
 
 UINT64 tstart;                                  // start of test in ms
-int sharing;                                    // % sharing
 int lineSz;                                     // cache line size
 int maxThread;                                  // max # of threads
 
@@ -50,7 +43,7 @@ UINT64 nrand(UINT64 &r)
 // TTS lock
 void TTS(){
 	UINT64 randin = rand();
-	int result;
+	UINT64 result;
 	for (int i = 0; i < NOPS; i++) {
 		randin = nrand(randin);
 		UINT64 in = randin % (range*2);	//reduce call to rand by using odd to add rand/2 and even to remove rand/2
@@ -209,7 +202,7 @@ int main()
                 r[indx].aborts += aborts[thread];
 			}
             r[indx].incs += *(GINDX(maxThread));
-			if ((sharing == 0) && (nt == 1)){
+			if (nt == 1){
 				ops1 = r[indx].ops;
 			}
             r[indx].nt = nt;

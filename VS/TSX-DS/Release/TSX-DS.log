@@ -1,9 +1,11 @@
-﻿Build started 28/01/2015 14:02:11.
-     1>Project "D:\Documents\College\FYP\TSX-DataStructures\VS\TSX-DS\TSX-DS.vcxproj" on node 2 (Build target(s)).
+﻿Build started 28/01/2015 14:21:27.
+     1>Project "D:\Documents\College\FYP\TSX-DataStructures\VS\TSX-DS\TSX-DS.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         D:\Program Files\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\main.cpp
+         D:\Program Files\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\BinTree.cpp ..\..\helper.cpp ..\..\main.cpp ..\..\output.cpp
+         BinTree.cpp
+         helper.cpp
          main.cpp
-     1>..\..\main.cpp(74): warning C4244: '=' : conversion from 'INT64' to 'int', possible loss of data
+         output.cpp
        Link:
          D:\Program Files\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\College\FYP\TSX-DataStructures\VS\Release\TSX-DS.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\College\FYP\TSX-DataStructures\VS\Release\TSX-DS.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\College\FYP\TSX-DataStructures\VS\Release\TSX-DS.lib" /MACHINE:X86 /SAFESEH Release\BinTree.obj
          Release\helper.obj
@@ -12,8 +14,8 @@
          Generating code
          Finished generating code
          TSX-DS.vcxproj -> D:\Documents\College\FYP\TSX-DataStructures\VS\Release\TSX-DS.exe
-     1>Done Building Project "D:\Documents\College\FYP\TSX-DataStructures\VS\TSX-DS\TSX-DS.vcxproj" (Build target(s)).
+     1>Done Building Project "D:\Documents\College\FYP\TSX-DataStructures\VS\TSX-DS\TSX-DS.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.88
+Time Elapsed 00:00:01.99

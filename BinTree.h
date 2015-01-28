@@ -11,6 +11,7 @@ public:
 	Node* volatile right;
 	Node() { key = 0; right = left = NULL; } // default constructor
 };
+
 class binTree
 {
 public:
