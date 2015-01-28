@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\main.cpp" />
+    <ClCompile Include="..\..\output.cpp" />
+    <ClCompile Include="..\..\BinTree.cpp">
+      <Filter>Data Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\helper.cpp">
+      <Filter>Helper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\config.h" />
+    <ClInclude Include="..\..\output.h" />
+    <ClInclude Include="..\..\BinTree.h">
+      <Filter>Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\helper.h">
+      <Filter>Helper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Data Structures">
+      <UniqueIdentifier>{0c7c9e80-eb2a-4db9-9af0-58bd8c5fedb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{b05118e1-3aa6-4555-ba7d-9dd09c4a32b9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

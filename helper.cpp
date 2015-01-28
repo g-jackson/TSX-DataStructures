@@ -863,7 +863,6 @@ void quit(int r)
 }
 
 #ifdef X64
-
 //
 // rand
 //
@@ -878,7 +877,6 @@ UINT64 rand(UINT64 &r)
 }
 
 #else
-
 //
 // rand
 //

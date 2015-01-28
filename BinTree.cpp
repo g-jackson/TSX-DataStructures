@@ -1,5 +1,7 @@
 #include "BinTree.h"
 
+using namespace std;
+
 INT64 binTree::minVal(Node* in){
 	if (in == NULL){
 		return -1;
@@ -50,7 +52,7 @@ INT64 binTree::isValid(Node* in){
 
 INT64 binTree::contains(INT64 n){
 	Node* volatile *pp = &root;
-	Node *p = root;
+	Node* volatile p = root;
 	while (p->key != n){
 		if (p->key < n){
 			if (p->right != NULL){
@@ -74,7 +76,7 @@ INT64 binTree::contains(INT64 n){
 
 INT64 binTree::add(Node *n){
 	Node* volatile *pp = &root;
-	Node *p = root;
+	Node* volatile p = root;
 	while (p) {
 		if (n->key < p->key) {
 			pp = &p->left;
@@ -91,14 +93,14 @@ INT64 binTree::add(Node *n){
 	return 1;
 }
 
-Node* binTree::remove(INT64 key){
-	Node **pp = &root;
-	Node *p = root;
+Node* binTree::remove(INT64 n){
+	Node* volatile* pp = &root;
+	Node* volatile p = root;
 	while (p) {
-		if (key < p->key) {
+		if (n < p->key) {
 			pp = &p->left;
 		}
-		else if (key > p->key) {
+		else if (n > p->key) {
 			pp = &p->right;
 		}
 		else {
@@ -117,8 +119,8 @@ Node* binTree::remove(INT64 key){
 		*pp = p->left; // ONE child
 	}
 	else {
-		Node *r = p->right; // TWO children
-		Node **ppr = &p->right; // find min key in right sub tree
+		Node* volatile r = p->right; // TWO children
+		Node * volatile* ppr = &p->right; // find min key in right sub tree
 		while (r->left) {
 			ppr = &r->left;
 			r = r->left;
@@ -128,12 +130,4 @@ Node* binTree::remove(INT64 key){
 		*ppr = r->right;
 	}
 	return p; // return removed node
-}
-
-INT64 binTree::hleAdd(Node *n){
-
-}
-
-Node* binTree::hleRemove(INT64 key){
-
 }

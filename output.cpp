@@ -2,7 +2,9 @@
 
 using namespace std;                            // cout
 
-void outputConfig(int ncpu, int maxThread, char dateAndTime[256], int lineSz){
+void outputConfig(int ncpu, int maxThread, int lineSz){
+	// get date
+	char dateAndTime[256];
 	getDateAndTime(dateAndTime, sizeof(dateAndTime));
 
 	//

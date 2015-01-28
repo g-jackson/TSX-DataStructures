@@ -25,7 +25,7 @@ typedef struct {
 	UINT64 aborts;                              //
 } Result;
 
-void outputConfig(int ncpu, int maxThread, char dateAndTime[256], int lineSz);
+void outputConfig(int ncpu, int maxThread, int lineSz);
 void outputResult(Result* r, int indx, int range);
 void outputHeader();
 void endResultOutput(Result* r, int indx);
