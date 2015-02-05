@@ -135,6 +135,11 @@ Node* binTree::remove(INT64 n){
 	return p; // return removed node
 }
 
-void halfBinTree(){
-
+//fill the binary tree with even numbers
+void binTree::halfBinTree(int range){
+	for (int i = 0; i < range; i+=2){
+		Node* in = new Node();
+		in->key = i;
+		this->add(in);
+	}
 }

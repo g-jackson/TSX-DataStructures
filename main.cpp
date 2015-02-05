@@ -29,7 +29,7 @@ UINT indx;                                      // results index
 volatile VINT *g;                               // NB: position of volatile
 
 //shared thread variables
-binTree tree;
+binTree* tree;
 int range = 0;
 
 UINT64 nrand(UINT64 &r)
@@ -51,10 +51,10 @@ void TTS(){
 		if (in %2 ==0){
 			in = in/2;
 			do {
-				while (tree.lock == 1)_mm_pause();
-			} while (InterlockedExchange(&tree.lock, 1));
-			Node* removed = tree.remove(in);
-			tree.lock = 0;
+				while (tree->lock == 1)_mm_pause();
+			} while (InterlockedExchange(&tree->lock, 1));
+			Node* removed = tree->remove(in);
+			tree->lock = 0;
 			delete removed;
 		}
 		else{
@@ -62,38 +62,38 @@ void TTS(){
 			in = in/2;
 			newNode->key = in;
 			do {
-				while (tree.lock == 1)_mm_pause();
-			} while (InterlockedExchange(&tree.lock, 1));
-			result = tree.add(newNode);
-			tree.lock = 0;
+				while (tree->lock == 1)_mm_pause();
+			} while (InterlockedExchange(&tree->lock, 1));
+			result = tree->add(newNode);
+			tree->lock = 0;
 			if(!result){
 				delete newNode;
 			}
 		}
 		
 	}
-}
+} 
 
 // HLE Lock
 void HLE(){
 	for (int i = 0; i < NOPS; i++) {
 		UINT64 in = rand() % range * 2;	//reduce call to rand by using odd to add rand/2 and even to remove rand/2
-		while (_InterlockedExchange_HLEAcquire(&tree.lock, 1)){
+		while (_InterlockedExchange_HLEAcquire(&tree->lock, 1)){
 			do {
 				_mm_pause();
-			} while (tree.lock == 1);
+			} while (tree->lock == 1);
 		}
 		if (in % 2 == 0){
 			in = in / 2;
 			//cout << " removing " << in;
-			Node* removed = tree.remove(in);
+			Node* removed = tree->remove(in);
 			delete removed;
 		}
 		else{
 			Node* newNode = new Node();
 			in = in / 2;
 			newNode->key = in;
-			if (tree.add(newNode)){
+			if (tree->add(newNode)){
 				//cout << " added" << in;
 			}
 			else{
@@ -101,7 +101,7 @@ void HLE(){
 				//cout << " couldn't add " << in;
 			}
 		}
-		_Store_HLERelease(&tree.lock, 0);
+		_Store_HLERelease(&tree->lock, 0);
 	}
 }
 
@@ -146,7 +146,7 @@ int main()
 
     // get cache info
     lineSz = getCacheLineSz();
-    //lineSz *= 2;
+    lineSz *= 2;
 
 	//output config and processor info
 	outputConfig(ncpu,  maxThread, lineSz);
@@ -160,8 +160,7 @@ int main()
     }
 	*/
 
-    // allocate global variable
-    // NB: each element in g is stored in a different cache line to stop false sharing
+    //allocate global variables NB: each element in g is stored in a different cache line to stop false sharing
     threadH = (THREADH*) ALIGNED_MALLOC(maxThread*sizeof(THREADH), lineSz);             // thread handles
     ops = (UINT64*) ALIGNED_MALLOC(maxThread*sizeof(UINT64), lineSz);                   // for ops per thread
     aborts = (UINT64*) ALIGNED_MALLOC(maxThread*sizeof(UINT64), lineSz);                // for counting aborts
@@ -174,8 +173,11 @@ int main()
     // run tests
 	outputHeader();
     UINT64 ops1 = 1;
-	for (int i = 1; i < 6; i++){
+	for (int i = 1; i < 5; i++){
 		range = (int)(pow(2,(4*i)));
+		binTree newtree = binTree();
+		tree = &newtree;
+		tree->halfBinTree(range);
 		for (int nt = 1; nt <= maxThread; nt *= 2, indx++) {
             //  zero shared memory
 			for (int thread = 1; thread < nt; thread++){
