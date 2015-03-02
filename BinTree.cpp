@@ -136,7 +136,7 @@ Node* binTree::remove(INT64 n){
 }
 
 //fill the binary tree with even numbers
-void binTree::halfBinTree(int range){
+void binTree::fill(int range){
 	for (int i = 0; i < range; i+=2){
 		Node* in = new Node();
 		in->key = i;

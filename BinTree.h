@@ -5,6 +5,7 @@ typedef signed __int64      INT64, *PINT64;
 
 #pragma once
 class Node {
+	friend class binTree;
 public:
 	INT64 volatile key;
 	Node* volatile left;
@@ -24,7 +25,7 @@ public:
 	INT64 maxVal(Node*);
 	INT64 minVal(Node*);
 	INT64 isValid(Node*);
-	void halfBinTree(int);
+	void fill(int);
 	binTree(){
 		root = NULL;
 		lock = 0;

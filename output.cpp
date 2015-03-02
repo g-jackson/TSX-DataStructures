@@ -1,4 +1,6 @@
 #include "output.h"                             //
+#include <iostream>
+#include <fstream>
 
 using namespace std;                            // cout
 
@@ -11,22 +13,22 @@ void outputConfig(int ncpu, int maxThread, int lineSz){
 	// console output
 	//
 	cout << getHostName() << " " << getOSName() << " sharing " << (is64bitExe() ? "(64" : "(32") << "bit EXE)" << endl;
-#ifdef _DEBUG
-	cout << " DEBUG";
-#else
-	cout << " RELEASE";
-#endif
-	cout << '\n' << " NCPUS=" << ncpu << endl << " RAM=" << (getPhysicalMemSz() + GB - 1) / GB << "GB " << endl << dateAndTime;
+	cout << dateAndTime << endl;
+	cout << " NCPUS=" << ncpu << endl << " RAM=" << (getPhysicalMemSz() + GB - 1) / GB << "GB " << endl;
 #ifdef COUNTER64
 	cout << " COUNTER64";
 #else
 	cout << " COUNTER32" << endl;
 #endif
-	cout << " NOPS=" << NOPS << endl << " NSECONDS=" << NSECONDS;
-	cout << endl;
-	cout << endl;
-	cout << "Intel" << (cpu64bit() ? "64" : "32") << " family " << cpuFamily() << " model " << cpuModel() << " stepping " << cpuStepping() << " " << cpuBrandString() << endl;
+	cout << " NOPS=" << NOPS << endl;
+	cout << " NSECONDS=" << NSECONDS << endl;
+#if  MODIFY == 0
+	cout << " MODIFY=" << MODIFY << " (modifying OPs = 0%)" << endl;
+#else
+	cout << " MODIFY=" << MODIFY << " (modifying OPs = " << ((float)(NOPS) / (float)(MODIFY)) << "%)" << endl;
+#endif
 
+	cout << "Intel" << (cpu64bit() ? "64" : "32") << " family " << cpuFamily() << " model " << cpuModel() << " stepping " << cpuStepping() << " " << cpuBrandString() << endl;
 	ALIGN(64) UINT64 cnt0;
 	ALIGN(64) UINT64 cnt1;
 	ALIGN(64) UINT64 cnt2;
@@ -44,14 +46,10 @@ void outputConfig(int ncpu, int maxThread, int lineSz){
 }
 
 void outputHeader(){
-	//
 	// use thousands comma separator
-	//
 	setCommaLocale();
 
-	//
 	// header
-	//
 	cout << setw(4) << "nt";
 	cout << setw(6) << "rt";
 	cout << setw(16) << "ops";
@@ -80,12 +78,16 @@ void outputResult(Result* r, int indx, int range){
 
 void endResultOutput(Result* r, int indx){
 	setLocale();
-	cout << "sharing/nt/rt/ops/incs/aborts";
-	cout << endl;
-	for (int i = 0; i < indx; i++) {
-		cout << "/" << r[i].nt << "/" << r[i].rt << "/" << r[i].ops << "/" << r[i].incs;
-		cout << "/" << r[i].aborts;
-		cout << endl;
+	if (LOG){
+		ofstream logfile;
+		logfile.open("log.txt");
+		logfile << "nt/rt/ops/incs/aborts";
+		logfile << endl;
+		cout << "Writing to file 'log.txt'.";
+		for (int i = 0; i < indx; i++) {
+			logfile << r[i].nt << "/" << r[i].rt << "/" << r[i].ops << "/" << r[i].incs << "/" << r[i].aborts << endl;
+		}
+		logfile.close();
 	}
 	cout << endl;
 }
