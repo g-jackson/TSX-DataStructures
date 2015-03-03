@@ -106,6 +106,7 @@ bool SimpleSList::add(int x){
 	
 }
 
+//pre-allocated memory version
 bool SimpleSList::add(int x, Node* newNode){
 	int toplevel = randomLevel(MAX_LEVEL);
 	Node** preds = new Node*[MAX_LEVEL + 1];
@@ -148,6 +149,7 @@ bool SimpleSList::remove(int x){
 	}
 }
 
+//pre-allocated memory version
 bool SimpleSList::remove(int x, Node* victim){
 	int toplevel = -1;
 	Node** preds = new Node*[MAX_LEVEL + 1];
@@ -176,6 +178,15 @@ bool SimpleSList::contains(int x){
 	Node** succs = new Node*[MAX_LEVEL + 1];
 	int lfound = find(x, preds, succs);
 	return (lfound != -1);
+}
+
+/*Fill:
+Half fills list 
+*/
+void SimpleSList::fill(int x){
+	for (int i = 0; i < x; i += 2){
+		this->add(i);
+	}
 }
 
 /*

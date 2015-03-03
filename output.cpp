@@ -27,7 +27,8 @@ void outputConfig(int ncpu, int maxThread, int lineSz){
 #else
 	cout << " MODIFY=" << MODIFY << " (modifying OPs = " << ((float)(NOPS) / (float)(MODIFY)) << "%)" << endl;
 #endif
-
+	cout << " LOGGING=" << LOG << endl;
+	cout << " FILL=" << FILL << endl;
 	cout << "Intel" << (cpu64bit() ? "64" : "32") << " family " << cpuFamily() << " model " << cpuModel() << " stepping " << cpuStepping() << " " << cpuBrandString() << endl;
 	ALIGN(64) UINT64 cnt0;
 	ALIGN(64) UINT64 cnt1;
